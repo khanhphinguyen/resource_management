@@ -34,3 +34,20 @@ class CompanyView(views.APIView):
             company_list = list(company_query)
             company_list_return.extend(company_list)
         return Response(company_list_return)
+
+class EmployeesView(views.APIView):
+    def get(self, request, format=None):
+        '''
+        API return all employees group by level
+        :return: JSON
+        '''
+
+        level_set = set(Employees.objects.values_list('level', flat=True))
+        level_list = list(level_set)
+        level_list.sort()
+
+        employeesreturn = []
+        for level in level_list:
+            employees_list = list(Employees.objects.filter(level=level).order_by('join_date','employee_name').values())
+            employeesreturn.extend(employees_list)
+        return Response(employeesreturn)
