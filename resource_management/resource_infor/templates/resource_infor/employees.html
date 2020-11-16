@@ -1,43 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-<h1>Employees list</h1>
-<h2> Hello. You have visited Employees store {{request.COOKIES.visits|default:'1'}} times</h2>
-<ul>
-    {% for employee in employees %}
-    <li>
-        {{employee}}
-    </li>
-    {% endfor %}
-</ul>
-
-{% if employees.has_other_pages %}
-<table>
-    <tr class="pagination">
-        {% if employees.has_previous %}
-        <td><a href="?page={{employees.previous_page_number}}">&laquo;</a> </td>
-        {% else %}
-        <td class="disabled"><span>&laquo;</span></td>
-        {% endif %}
-        {% for i in employees.paginator.page_range %}
-        {% if employees.number == i %}
-        <td class="active"><span>{{i}}<span class="sr-only">(current)</span> </span></td>
-        {% else %}
-        <td><a href="?page={{i}}">{{i}}</a> </td>
-        {% endif %}
-        {% endfor %}
-        {% if employees.has_next %}
-        <td><a href="?page={{employees.next_page_number}}">&raquo;</a> </td>
-        {% else %}
-        <td class="disable"><span>&raquo;</span></td>
-        {% endif %}
-    </tr>
-    {% endif %}
-</table>
-</body>
-
 <head>
     <meta charset="UTF-8">
     <title>Employees list</title>
 </head>
+<body>
+<h1>Employees list</h1>
+    {% for employee in employees %}
+        <ul>
+        <li>
+            {{employee}}
+        </li>
+        </ul>
+        <a href="{% url 'resource_infor:company' %}">Back Company List!</a>
+    {% endfor %}
+
+</body>
 </html>

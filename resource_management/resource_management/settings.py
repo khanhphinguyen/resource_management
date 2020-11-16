@@ -127,17 +127,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'resource_management_cache_table',
-        'TIMEOUT': 60,
-        'OPTIONS': {
-            'MAX_ENTRIES': 100
-        }
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+#         'LOCATION': 'resource_management_cache_table',
+#         'TIMEOUT': 0,
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 100
+#         }
+#     }
+# }
 
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 3600
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+# CACHE_MIDDLEWARE_ALIAS = 'default'
+# CACHE_MIDDLEWARE_SECONDS = 3600
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''

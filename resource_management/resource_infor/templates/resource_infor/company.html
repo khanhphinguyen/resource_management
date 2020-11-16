@@ -7,12 +7,15 @@
 <body>
     <h1>Company list</h1>
     <ul>
-        {% for company_e in company %}
+        {% for company_e in companies %}
         <li>
-            {{company_e}}
+            <a href="{% url 'resource_infor:employees_detail' company_e.id %}">{{company_e.company_name}}</a>
         </li>
         {% endfor %}
     </ul>
-
+    <p>
+        <a href="{% url 'resource_infor:company_json' %}">All company in JSON format</a> <br>
+        <a href="{% url 'resource_infor:employees_json' %}">All employees in JSON format</a
+    </p>
 </body>
 </html>
