@@ -1,16 +1,46 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.db.models import Count
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
+from django.views.generic import ListView
 
 from .models import Company, Employees
+
 from rest_framework import views
 from rest_framework.response import Response
 
-# Return first 5 largest company
-def company(request):
-    context = {'companies': Company.objects.annotate(total=Count('employees')).order_by('-total')[:5]}
-    return render(request, 'resource_infor/company.html', context)
+# Return specific company list number
+class CompanyReturnList(View):
+    model_class = Company
+    template_name = 'resource_infor/company.html'
+    variable_name = 'companies'
+    variable_count = 'employees'
+    max_return = 5
+    decorator = [login_required, never_cache]
+
+    @method_decorator(decorator, name='dispatch')
+    def get(self, request, *args, **kwargs):
+        content_ob = self.model_class.objects.annotate(count_num=Count(self.variable_count)).order_by('-count_num')[:self.max_return]
+        return render(request, self.template_name, {self.variable_name: content_ob})
+
+# Return specific employees list number
+class EmployeesReturnList(CompanyReturnList):
+    model_class = Employees
+    template_name = 'resource_infor/detail.html'
+    variable_name = 'content_ob'
+    variable_count = 'employee_age'
 
 # Return employees list specific company
+# class EmployeeDetail(View):
+#     model_class = Employees
+#     template_name = 'resource_infor/employees.html'
+#     pk_key = company_id
+#
+#     def get(self, request, ob_pk, *args, **kwargs):
+#         context = self.model_class.objects.filter(self.pk_key = ob_pk)
+#         return render(request, self.template_name, {'employees': context})
 def employees_detail(request, company_pk):
     employees_list = Employees.objects.filter(company_id=company_pk)
     context = {'employees': employees_list}
@@ -56,3 +86,6 @@ class EmployeesView(views.APIView):
             employees_list = list(Employees.objects.filter(level=level).order_by('join_date','employee_name').values())
             employeesreturn.extend(employees_list)
         return Response(employeesreturn)
+
+# class EmployeesList(ListView):
+#     model = Employees
