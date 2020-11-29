@@ -1,6 +1,5 @@
 from django.urls import path, re_path
 from . import views
-from .models import Employees
 
 app_name = 'resource_infor'
 urlpatterns = [
@@ -9,5 +8,7 @@ urlpatterns = [
     path('employees/', views.EmployeesReturnList.as_view(max_return=3), name='employee_list'),
     path('<int:company_pk>/employees/', views.employees_detail, name='employees_detail'),
     re_path(r'^employees/json/', views.EmployeesView.as_view(), name='employees_json'),
-    # path('test/', views.EmployeesList.as_view(), name='test'),
+    path('listview/', views.EmployeesList.as_view()),
+    path('detailview/<int:pk>', views.CompanyDetailView.as_view()),
+    path('employee/<company>/', views.CompanyEmployeeList.as_view(), name='employees_by_company'),
 ]

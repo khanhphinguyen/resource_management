@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+</head>
+<body>
+    <ul>
+    {% for employee in object_list %}
+        <li>{{employee.employee_name}}</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'resource_infor:company' %}">Back company list!</a>
+
+</body>
+</html>

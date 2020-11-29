@@ -9,7 +9,7 @@
     <ul>
         {% for company_e in companies %}
         <li>
-            <a href="{% url 'resource_infor:employees_detail' company_e.id %}">{{company_e.company_name}}</a>
+            <a href="{% url 'resource_infor:employees_by_company' company_e.company_name %}">{{company_e.company_name}}</a>
         </li>
         {% endfor %}
     </ul>
